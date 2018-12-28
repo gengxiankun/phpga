@@ -1,0 +1,74 @@
+#!/usr/bin/env php
+<?php
+/**
+ * phplb google authenticator cli
+ *
+ * @action getCode            string Calculate the code, with given secret and point in time.
+ * @action createSecret       string Create new secret.
+ * @action getQRCodeGoogleUrl string Get QR-Code URL for image, from google charts.
+ * @action verifyCode         string Check if the code is correct. This will accept codes starting from $discrepancy*30sec ago to $discrepancy*30sec from now.
+ *
+ * @category  PHP
+ * @author    耿贤坤 <gengxiankun@126.com>
+ */
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
+}
+
+// 获取执行的动作
+$action = @$argv[1];
+// 清理参数
+unset($argv[0], $argv[1]);
+
+function odd($var)
+{
+    return($var & 1);
+}
+
+function even($var)
+{
+    return(!($var & 1));
+}
+
+// 根据传参的顺序，设置变量
+$keys = array_filter($argv, 'even', ARRAY_FILTER_USE_KEY);
+$values = array_filter($argv, 'odd', ARRAY_FILTER_USE_KEY);
+$parameters = array_combine($keys, $values);
+extract($parameters);
+
+$ga = new PHPGangsta_GoogleAuthenticator();
+
+switch ($action) {
+	case 'getCode':
+		$timeSlice = $timeSlice ?? null;
+		$result = $ga->getCode($secret, $timeSlice);
+		break;
+
+	case 'createSecret':
+		$result = $ga->createSecret();
+		break;
+
+	case 'getQRCodeGoogleUrl':
+		$title = $title ?? null;
+		$params = $params ?? array();
+		$result = $ga->getQRCodeGoogleUrl($name, $secret, $title, $params);
+		break;
+
+	case 'verifyCode':
+		$discrepancy = $discrepancy ?? 1;
+		$currentTimeSlice = $currentTimeSlice ?? null;
+		$result = $ga->verifyCode($secret, $code, $discrepancy, $currentTimeSlice);
+		break;
+	
+	default:
+		throw new Exception("Error Processing Command", 1);
+		break;
+}
+
+echo $result;
+echo PHP_EOL;
+return 0;

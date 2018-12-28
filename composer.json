@@ -1,0 +1,36 @@
+{
+    "name": "gengxiankun/googleauthenticator",
+    "description": "Google Authenticator 2-factor authentication",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["GoogleAuthenticator", "TOTP", "rfc6238"],
+    "license": "BSD-4-Clause",
+    "authors": [
+        {
+            "name": "Michael Kliewe",
+            "email": "info@phpgangsta.de",
+            "homepage": "http://www.phpgangsta.de/",
+            "role": "Developer"
+        },
+        {
+            "name": "gengxiankun",
+            "email": "gengxiankun@126.com",
+            "homepage": "https://github.com/gengxiankun",
+            "role": "Developer"
+        }
+    ],
+    "bin": [
+        "bin/phpga"
+    ],
+    "support": {
+        "source": "https://github.com/gengxiankun/GoogleAuthenticator",
+        "issues": "https://github.com/gengxiankun/GoogleAuthenticator/issues"
+    },
+    "require": {
+        "php": ">=5.3",
+        "phpgangsta/googleauthenticator": "@dev"
+    },
+    "autoload": {
+	   "classmap": ["PHPGangsta/GoogleAuthenticator.php"]
+    }
+}
