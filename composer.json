@@ -21,8 +21,7 @@
         "issues": "https://github.com/gengxiankun/GoogleAuthenticator/issues"
     },
     "require": {
-        "php": ">=5.3",
-        "phpgangsta/googleauthenticator": "@dev"
+        "php": ">=5.3"
     },
     "autoload": {
 	   "classmap": ["PHPGangsta/GoogleAuthenticator.php"]
